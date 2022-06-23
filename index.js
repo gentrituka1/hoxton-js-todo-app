@@ -142,6 +142,10 @@ function render(){
 
             completedTodoListLi.append(completedTodoItemsInput, completedTodoItemsSpan, completedTodoItemsDelete)
             completedTodoListUl.append(completedTodoListLi)
+            completedTodoListUl.addEventListener("click", function(){
+                state.todos.splice(state.todos.indexOf(element), 1)
+                render()
+            })
 
             
         }
