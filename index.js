@@ -14,6 +14,7 @@ function render(){
    document.body.textContent = ""
 
    let containerDiv = document.createElement("div")
+    containerDiv.className = "container"
 
    let firstH3Element = document.createElement("h3")
     firstH3Element.textContent = "OPTIONS"
