@@ -29,6 +29,8 @@ function render(){
     checkbox.type = "checkbox"
     checkbox.name = "checkbox"
 
+    checkboxDiv.append(pEl1, checkbox)
+
     let secondH3Element = document.createElement("h3")
     secondH3Element.textContent = "ADD ITEM"
     secondH3Element.className = "header-3"
@@ -42,6 +44,8 @@ function render(){
 
     let pEl2 = document.createElement("p")
     pEl2.textContent = "Add item"
+
+    addItemDiv.append(pEl2, addItemInput)
 
     let thirdH3Element = document.createElement("h3")
     thirdH3Element.textContent = "TODO"
@@ -77,8 +81,41 @@ function render(){
     todoItemsDelete.textContent = "Delete"
 
     todoListLi.append(todoItemsInput, todoItemsSpan, todoItemsDelete)
+    todoListUl.append(todoListLi)
     }
-}
+    todoListDiv.append(todoListUl)
+
+
+
+    let fourthH3Element = document.createElement("h3")
+    fourthH3Element.textContent = "COMPLETED"
+    fourthH3Element.className = "header-3"
+
+    let completedTodoListUl = document.createElement("ul")
+    completedTodoListUl.className = "completed-todo-list"
+
+    for (let element of state){
+        if (element.completed === true){
+            let completedTodoListLi = document.createElement("li")
+            completedTodoListLi.className = "completed-todo-items"
+
+            let completedTodoItemsInput = document.createElement("input")
+            completedTodoItemsInput.type = "checkbox"
+
+            let completedTodoItemsSpan = document.createElement("span")
+            completedTodoItemsSpan.textContent = element.name
+
+            let completedTodoItemsDelete = document.createElement("button")
+            completedTodoItemsDelete.textContent = "Delete"
+
+            completedTodoListLi.append(completedTodoItemsInput, completedTodoItemsSpan, completedTodoItemsDelete)
+            completedTodoListUl.append(completedTodoListLi)
+        }
+    }
+
+    containerDiv.append(firstH3Element, checkboxDiv, secondH3Element, addItemDiv, thirdH3Element, todoListDiv, fourthH3Element, completedTodoListUl)
+    document.body.append(containerDiv)
+}   
 
 render();
 
