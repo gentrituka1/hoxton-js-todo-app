@@ -3,12 +3,16 @@
 // - Create action functions that update state
 // - Create render functions that read from state
 
-let state = [
-    { title: "Go shopping", completed: false },
-    { title: "Go to the gym", completed: false },
-    { title: "Go to the movies", completed: false },
-]
+let state = {
+    todos: [
+        { title: "Go shopping", completed: false },
+        { title: "Go to the gym", completed: false },
+        { title: "Go to the movies", completed: false },
+    ],
+    showChecked: false
+}
     
+            
 
 function render(){
    document.body.textContent = ""
@@ -29,8 +33,12 @@ function render(){
     let checkbox = document.createElement("input")
     checkbox.type = "checkbox"
     checkbox.name = "checkbox"
+    checkbox.addEventListener("change", function(){
+        state.showChecked = !state.showChecked
+        render()
+    })
 
-    checkboxDiv.append(pEl1, checkbox)
+    checkboxDiv.append(checkbox, pEl1)
 
     let secondH3Element = document.createElement("h3")
     secondH3Element.textContent = "ADD ITEM"
@@ -46,7 +54,7 @@ function render(){
     let pEl2 = document.createElement("p")
     pEl2.textContent = "Add item"
 
-    addItemDiv.append(pEl2, addItemInput)
+    addItemDiv.append(addItemInput, pEl2)
 
     let thirdH3Element = document.createElement("h3")
     thirdH3Element.textContent = "TODO"
@@ -59,62 +67,87 @@ function render(){
     todoListUl.className = "todo-list"
 
     pEl2.addEventListener("click", function(){
+        if(addItemInput.value !== ""){
         let inputValue = addItemInput.value
             let newTodo = {
                 title: inputValue,
                 completed: false}
             state.todos.push(newTodo)
             render()
+        }
     })
 
-    for (let element of state){
-    let todoListLi = document.createElement("li")
-    todoListLi.className = "todo-items"
 
-    let todoItemsInput = document.createElement("input")
-    todoItemsInput.type = "checkbox"
-    todoItemsInput.name = "checkbox"
+    for (let element of state.todos){
 
-    let todoItemsSpan = document.createElement("span")
-    todoItemsSpan.textContent = element.name
+        if(element.completed === false){
+        let todoListLi = document.createElement("li")
+        todoListLi.className = "todo-items"
 
-    let todoItemsDelete = document.createElement("button")
-    todoItemsDelete.textContent = "Delete"
+        let todoItemsInput = document.createElement("input")
+        todoItemsInput.type = "checkbox"
+        todoItemsInput.name = "checkbox"
+        todoItemsInput.addEventListener("change", function(){
+            element.completed = !element.completed
+            render()
+        })
 
-    todoListLi.append(todoItemsInput, todoItemsSpan, todoItemsDelete)
-    todoListUl.append(todoListLi)
+        let todoItemsSpan = document.createElement("span")
+        todoItemsSpan.textContent = element.title
+
+        let todoItemsDelete = document.createElement("button")
+        todoItemsDelete.textContent = "Delete"
+        todoItemsDelete.addEventListener("click", function(){
+            state.todos.splice(state.todos.indexOf(element), 1)
+            render()
+        })
+
+        todoListLi.append(todoItemsInput, todoItemsSpan, todoItemsDelete)
+        todoListUl.append(todoListLi)
+        }
+
     }
     todoListDiv.append(todoListUl)
-
-
-
-    let fourthH3Element = document.createElement("h3")
-    fourthH3Element.textContent = "COMPLETED"
-    fourthH3Element.className = "header-3"
 
     let completedTodoListUl = document.createElement("ul")
     completedTodoListUl.className = "completed-todo-list"
 
-    for (let element of state){
-        if (element.completed === true){
+
+    if(state.showChecked){ 
+            checkbox.checked = true
+            let fourthH3Element = document.createElement("h3")
+            fourthH3Element.textContent = "COMPLETED"
+            fourthH3Element.className = "header-3"
+
+            
+            
+            completedTodoListUl.append(fourthH3Element)
+    }
+    
+
+    for (let element of state.todos){
+        if (element.completed === true && state.showChecked){
             let completedTodoListLi = document.createElement("li")
+            console.log(element)
             completedTodoListLi.className = "completed-todo-items"
 
             let completedTodoItemsInput = document.createElement("input")
             completedTodoItemsInput.type = "checkbox"
 
             let completedTodoItemsSpan = document.createElement("span")
-            completedTodoItemsSpan.textContent = element.name
+            completedTodoItemsSpan.textContent = element.title
 
             let completedTodoItemsDelete = document.createElement("button")
             completedTodoItemsDelete.textContent = "Delete"
 
             completedTodoListLi.append(completedTodoItemsInput, completedTodoItemsSpan, completedTodoItemsDelete)
             completedTodoListUl.append(completedTodoListLi)
+
+            
         }
     }
 
-    containerDiv.append(firstH3Element, checkboxDiv, secondH3Element, addItemDiv, thirdH3Element, todoListDiv, fourthH3Element, completedTodoListUl)
+    containerDiv.append(firstH3Element, checkboxDiv, secondH3Element, addItemDiv, thirdH3Element, todoListDiv, completedTodoListUl)
     document.body.append(containerDiv)
 }   
 

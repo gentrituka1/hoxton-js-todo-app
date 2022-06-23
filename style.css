@@ -40,6 +40,7 @@ body {
 }
 .add-item-div p{
     text-align: end;
+    cursor: pointer;
 }
 .add-item-div input{
     width: 100%;
@@ -63,4 +64,11 @@ body {
 }
 .todo-list-div li span{
     font-size: 1.1rem;
+}
+.completed-todo-list li{
+    display: grid;
+    grid-template-columns: 30px 1fr 60px;
+    list-style: none;
+    padding: 15px;
+    align-items: center;
 }
