@@ -51,10 +51,21 @@ body {
 }
 .todo-list-div{
     display: grid;
-    grid-auto-flow: column; 
+    grid-auto-flow: row; 
     gap: 20px;
     padding: 30px 0px;
 }
+
+.delete-all-button-div{
+    display: grid;
+    place-items: center;
+}
+.delete-all-button{
+    padding: 5px;
+    width: 50%;
+    height: 40px;
+}
+
 .todo-list-div li{
     display: grid;
     grid-template-columns: 30px 1fr 60px;
@@ -72,4 +83,11 @@ body {
     list-style: none;
     padding: 15px;
     align-items: center;
+}
+.checkbox{
+    cursor: pointer;
+}
+
+.add-item-style:hover{
+    color:blue;
 }

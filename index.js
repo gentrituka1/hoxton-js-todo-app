@@ -31,6 +31,7 @@ function render(){
     pEl1.textContent = "Show completed"
 
     let checkbox = document.createElement("input")
+    checkbox.className = "checkbox"
     checkbox.type = "checkbox"
     checkbox.name = "checkbox"
     checkbox.addEventListener("change", function(){
@@ -52,12 +53,13 @@ function render(){
     addItemInput.name = "add-item"
 
     let pEl2 = document.createElement("p")
+    pEl2.className = "add-item-style"
     pEl2.textContent = "Add item"
 
     addItemDiv.append(addItemInput, pEl2)
 
     let thirdH3Element = document.createElement("h3")
-    thirdH3Element.textContent = "TODO"
+    thirdH3Element.textContent = "TO DO"
     thirdH3Element.className = "header-3"
 
     let todoListDiv = document.createElement("div")
@@ -85,6 +87,7 @@ function render(){
         todoListLi.className = "todo-items"
 
         let todoItemsInput = document.createElement("input")
+        todoItemsInput.className = "checkbox"
         todoItemsInput.type = "checkbox"
         todoItemsInput.name = "checkbox"
         todoItemsInput.addEventListener("change", function(){
@@ -102,12 +105,27 @@ function render(){
             render()
         })
 
-        todoListLi.append(todoItemsInput, todoItemsSpan, todoItemsDelete)
+        todoListLi.append(todoItemsInput, todoItemsSpan, todoItemsDelete )
         todoListUl.append(todoListLi)
         }
 
+        
+        
     }
-    todoListDiv.append(todoListUl)
+
+    let deleteAllItemsDiv = document.createElement("div")
+    deleteAllItemsDiv.className = "delete-all-button-div"
+
+    let deleteAllItems = document.createElement("button")
+        deleteAllItems.className = "delete-all-button"
+        deleteAllItems.textContent = "Delete All"
+        deleteAllItems.addEventListener("click", function(){
+
+            state.todos = []
+            render()
+        })
+    deleteAllItemsDiv.append(deleteAllItems)
+    todoListDiv.append(todoListUl, deleteAllItemsDiv)
 
     let completedTodoListUl = document.createElement("ul")
     completedTodoListUl.className = "completed-todo-list"
@@ -133,6 +151,11 @@ function render(){
 
             let completedTodoItemsInput = document.createElement("input")
             completedTodoItemsInput.type = "checkbox"
+            completedTodoItemsInput.className = "checkbox"
+            completedTodoItemsInput.addEventListener("change", function(){
+                element.completed = !element.completed
+                render()
+            })
 
             let completedTodoItemsSpan = document.createElement("span")
             completedTodoItemsSpan.textContent = element.title
@@ -142,12 +165,10 @@ function render(){
 
             completedTodoListLi.append(completedTodoItemsInput, completedTodoItemsSpan, completedTodoItemsDelete)
             completedTodoListUl.append(completedTodoListLi)
-            completedTodoListUl.addEventListener("click", function(){
+            completedTodoItemsDelete.addEventListener("click", function(){
                 state.todos.splice(state.todos.indexOf(element), 1)
                 render()
             })
-
-            
         }
     }
 
